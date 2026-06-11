@@ -14,7 +14,7 @@ interface ProgressionState {
 
 export const useProgressionStore =
   create<ProgressionState>(
-    (set) => ({
+    (set,get) => ({
       completed: [],
       isUnlocked: (moduleId) => {
         const index =

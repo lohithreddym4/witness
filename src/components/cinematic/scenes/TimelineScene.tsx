@@ -10,7 +10,7 @@ export default function TimelineScene({
   scene: Scene;
 }) {
   const nextScene = useJourneyStore(
-    (s) => s.nextScene
+    (s:any) => s.nextScene
   );
 
   return (

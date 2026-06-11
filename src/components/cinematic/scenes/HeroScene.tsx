@@ -10,7 +10,7 @@ export default function HeroScene({
   scene: Scene;
 }) {
   const nextScene = useJourneyStore(
-    (state) => state.nextScene
+    (state:any) => state.nextScene
   );
 
   return (

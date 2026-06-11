@@ -9,7 +9,7 @@ export default function QuestionScene({
   scene: Scene;
 }) {
   const nextScene = useJourneyStore(
-    (state) => state.nextScene
+    (state:any) => state.nextScene
   );
 
   return (

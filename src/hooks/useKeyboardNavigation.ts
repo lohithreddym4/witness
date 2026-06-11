@@ -5,11 +5,11 @@ import { useJourneyStore } from "@/store/journeyStore";
 
 export function useKeyboardNavigation() {
   const nextScene = useJourneyStore(
-    (state) => state.nextScene
+    (state:any) => state.nextScene
   );
 
   const previousScene = useJourneyStore(
-    (state) => state.previousScene
+    (state:any) => state.previousScene
   );
 
   useEffect(() => {

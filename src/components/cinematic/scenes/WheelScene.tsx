@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { samsaraNodes } from "@/content/concepts/samsara";
 
-export default function WheelScene() {
+export default function WheelScene({scene}: any) {
   const [selected, setSelected] =
     useState(samsaraNodes[0]);
 
