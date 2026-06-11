@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import SceneRenderer from "@/components/cinematic/SceneRenderer";
 import { witnessJourney } from "@/content/journeys/witness";
 import { useJourneyStore } from "@/store/journeyStore";
+import { useKeyboardNavigation } from "@/hooks/useKeyboardNavigation";
 
 export default function HomePage() {
   const currentScene = useJourneyStore(
@@ -11,6 +12,9 @@ export default function HomePage() {
   );
 
   const scene = witnessJourney[currentScene];
+
+  
+  useKeyboardNavigation();
 
   return (
     <main className="bg-black text-white min-h-screen overflow-hidden">
