@@ -24,8 +24,10 @@ export default async function ConceptPage({
 
   if (!concept) {
     return (
-      <main className="p-20">
-        Concept not found
+      <main className="min-h-screen bg-black text-white flex items-center justify-center">
+        <p className="text-zinc-500">
+          Concept not found
+        </p>
       </main>
     );
   }
@@ -38,67 +40,103 @@ export default async function ConceptPage({
     );
 
   return (
-    <main className="p-20 max-w-4xl mx-auto">
+    <main className="min-h-screen bg-black text-white">
 
-      <h1 className="text-6xl">
-        {concept.title}
-      </h1>
+      <div className="max-w-4xl mx-auto px-8 py-20">
 
-      <p className="mt-8 text-zinc-400">
-        {concept.description}
-      </p>
+        {/* Hero */}
 
-      <div className="mt-12">
+        <div className="text-center mb-20">
 
-        <h2 className="text-2xl mb-4">
-          Teaching
-        </h2>
+          <p className="uppercase tracking-[0.4em] text-zinc-600 text-sm">
+            Knowledge
+          </p>
 
-        <p>
-          {teaching?.teaching}
-        </p>
+          <h1 className="text-7xl md:text-8xl font-light mt-6">
+            {concept.title}
+          </h1>
 
-      </div>
-
-      <div className="mt-12">
-
-        <h2 className="text-2xl mb-4">
-          Reflection
-        </h2>
-
-        <p>
-          {teaching?.reflection}
-        </p>
-
-      </div>
-
-      <div className="mt-12">
-
-        <h2 className="text-2xl mb-4">
-          Related Concepts
-        </h2>
-
-        <div className="flex gap-4">
-
-          {concept.related.map(
-            (related) => (
-              <Link
-                key={related}
-                href={`/concepts/${related}`}
-                className=" border px-4 py-2"
-              >
-                {related}
-              </Link>
-            )
-          )}
+          <p className="mt-8 text-xl text-zinc-400 leading-relaxed max-w-2xl mx-auto">
+            {concept.description}
+          </p>
 
         </div>
-        <Link
-  href="/graph/knowledge"
-  className=" inline-block mt-10 border px-4 py-2"
->
-  Open Knowledge Graph
-</Link>
+
+        {/* Teaching */}
+
+        <section className="mb-10">
+
+          <div className="border border-zinc-800 rounded-2xl p-8">
+
+            <h2 className="text-3xl mb-6">
+              Teaching
+            </h2>
+
+            <p className="text-lg leading-relaxed text-zinc-300">
+              {teaching?.teaching}
+            </p>
+
+          </div>
+
+        </section>
+
+        {/* Reflection */}
+
+        <section className="mb-16">
+
+          <div className="border border-zinc-800 rounded-2xl p-8">
+
+            <h2 className="text-3xl mb-6">
+              Reflection
+            </h2>
+
+            <p className="text-lg leading-relaxed text-zinc-300 italic">
+              {teaching?.reflection}
+            </p>
+
+          </div>
+
+        </section>
+
+        {/* Related */}
+
+        <section>
+
+          <h2 className="text-3xl mb-8">
+            Continue Exploring
+          </h2>
+
+          <div className="flex flex-wrap gap-4">
+
+            {concept.related.map(
+              (related) => (
+                <Link
+                  key={related}
+                  href={`/concepts/${related}`}
+                  className=" px-5 py-3 rounded-full border border-zinc-800 hover:border-white transition-all"
+                >
+                  {related}
+                </Link>
+              )
+            )}
+
+          </div>
+
+        </section>
+
+        {/* Graph CTA */}
+
+        <div className="text-center mt-20">
+
+          <Link
+            href="/graph/knowledge"
+            className=" inline-flex items-center gap-2 border border-zinc-700 px-8 py-4 rounded-xl hover:border-white transition-all"
+          >
+            Open Knowledge Path →
+          </Link>
+
+        </div>
+
       </div>
 
     </main>

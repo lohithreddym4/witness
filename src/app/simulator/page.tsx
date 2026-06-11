@@ -99,94 +99,141 @@ export default function Simulator() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-white p-12">
+<main className="min-h-screen bg-black text-white">
 
-      <h1 className="text-6xl mb-10">
-        Age {state.age}
-      </h1>
+<div className="max-w-4xl mx-auto px-8 py-16">
 
-      <div className="space-y-3">
+  <div className="text-center mb-16">
 
-        <p>
-          Money: {state.money}
-        </p>
+    <p className="text-zinc-500 uppercase tracking-[0.4em]">
+      A Human Life
+    </p>
 
-        <p>
-          Status: {state.status}
-        </p>
+    <h1 className="text-8xl font-light mt-4">
+      {state.age}
+    </h1>
 
-        <p>
-          Relationships:
-          {" "}
-          {state.relationships}
-        </p>
+    <p className="text-zinc-500">
+      years old
+    </p>
 
-        <p>
-          Health: {state.health}
-        </p>
+  </div>
+
+  <div className="grid md:grid-cols-2 gap-4">
+
+    <div className="border border-zinc-800 rounded-xl p-6">
+      <p className="text-zinc-500">
+        Money
+      </p>
+
+      <p className="text-3xl mt-2">
+        {state.money}
+      </p>
+    </div>
+
+    <div className="border border-zinc-800 rounded-xl p-6">
+      <p className="text-zinc-500">
+        Status
+      </p>
+
+      <p className="text-3xl mt-2">
+        {state.status}
+      </p>
+    </div>
+
+    <div className="border border-zinc-800 rounded-xl p-6 md:col-span-2">
+      <p className="text-zinc-500">
+        Relationships
+      </p>
+
+      <p className="text-3xl mt-2">
+        {state.relationships}
+      </p>
+    </div>
+
+  </div>
+
+  <div className="mt-10">
+
+    <div className="flex justify-between mb-2">
+      <span>
+        Health
+      </span>
+
+      <span>
+        {state.health}%
+      </span>
+    </div>
+
+    <div className="h-3 bg-zinc-900 rounded-full overflow-hidden">
+
+      <div
+        className="h-full bg-white transition-all duration-700"
+        style={{
+          width: `${state.health}%`,
+        }}
+      />
+
+    </div>
+
+  </div>
+
+  {currentEvent && (
+    <div className="mt-16 border border-zinc-800 rounded-xl p-8">
+
+      <p className="text-zinc-500 mb-2">
+        Current Event
+      </p>
+
+      <h2 className="text-4xl">
+        {currentEvent.title}
+      </h2>
+
+    </div>
+  )}
+
+  {state.desires.length > 0 && (
+    <div className="mt-16">
+
+      <h2 className="text-2xl mb-4">
+        Attachments
+      </h2>
+
+      <div className="flex flex-wrap gap-3">
+
+        {state.desires.map(
+          (desire) => (
+            <span
+              key={desire}
+              className=" px-4 py-2 rounded-full border border-zinc-700"
+            >
+              {desire}
+            </span>
+          )
+        )}
 
       </div>
 
-      {state.desires.length > 0 && (
-        <div className="mt-10">
+    </div>
+  )}
 
-          <h2 className="text-2xl mb-4">
-            Desires
-          </h2>
+  <div className="text-center mt-20">
 
-          <div className="flex gap-3 flex-wrap">
+    <button
+      className=" border border-zinc-700 px-8 py-4 rounded-xl hover:border-white transition-all"
+      onClick={() =>
+        setState(
+          nextYear(state)
+        )
+      }
+    >
+      Live One Year →
+    </button>
 
-            {state.desires.map(
-              (desire) => (
-                <span
-                  key={desire}
-                  className="
-                    border
-                    px-3
-                    py-1
-                  "
-                >
-                  {desire}
-                </span>
-              )
-            )}
+  </div>
 
-          </div>
+</div>
 
-        </div>
-      )}
-
-      {currentEvent && (
-        <div
-          className="
-            border
-            border-zinc-700
-            p-6
-            mt-12
-          "
-        >
-          <h2 className="text-3xl">
-            {currentEvent.title}
-          </h2>
-        </div>
-      )}
-
-      <button
-        className="
-          mt-12
-          border
-          px-6
-          py-3
-        "
-        onClick={() =>
-          setState(
-            nextYear(state)
-          )
-        }
-      >
-        Live One Year
-      </button>
-
-    </main>
+</main>
   );
 }

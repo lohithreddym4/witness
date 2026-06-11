@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import {
+  AnimatePresence,
+  motion,
+} from "framer-motion";
 
 import DesireInquiry from "@/components/inquiry/DesireInquiry";
 import DesireGraph from "@/components/graph/DesireGraph";
@@ -13,6 +17,27 @@ import {
 import {
   useProgressionStore,
 } from "@/store/progressionStore";
+
+const pageVariants = {
+  hidden: {
+    opacity: 0,
+    y: 24,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -24,
+    transition: {
+      duration: 0.4,
+    },
+  },
+};
 
 export default function DesirePage() {
   const router = useRouter();
@@ -32,92 +57,181 @@ export default function DesirePage() {
 
   if (!selected) {
     return (
-      <main className="p-20">
+      <main className="min-h-screen bg-black text-white p-20">
 
-        <h1 className="text-5xl mb-12">
+        <motion.h1
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          className="text-5xl mb-12"
+        >
           Choose A Desire
-        </h1>
+        </motion.h1>
 
-        <div className="space-y-4">
-
+        <motion.div
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+          transition={{
+            delay: 0.3,
+          }}
+          className="space-y-4 max-w-2xl"
+        >
           {Object.keys(
             desireTrees
           ).map((key) => (
-            <button
+            <motion.button
               key={key}
+              whileHover={{
+                scale: 1.02,
+              }}
+              whileTap={{
+                scale: 0.98,
+              }}
               onClick={() =>
                 setSelected(
                   key as keyof typeof desireTrees
                 )
               }
-              className=" block border p-4 "
+              className="block w-full border border-zinc-800 p-5 text-left hover:border-zinc-500 transition-colors"
             >
               {key}
-            </button>
+            </motion.button>
           ))}
-
-        </div>
+        </motion.div>
 
       </main>
     );
   }
 
   return (
-    <main className="p-20">
+    <main className="min-h-screen bg-black text-white p-20">
 
-      {!showGraph ? (
-        <>
-          <DesireInquiry
-            chain={
-              desireTrees[
-                selected
-              ]
+      <AnimatePresence
+        mode="wait"
+      >
+        {!showGraph ? (
+          <motion.div
+            key="inquiry"
+            variants={
+              pageVariants
             }
-          />
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <DesireInquiry
+              chain={
+                desireTrees[
+                  selected
+                ]
+              }
+            />
 
-          <button
-            onClick={() =>
-              setShowGraph(true)
+            <motion.button
+              whileHover={{
+                scale: 1.03,
+              }}
+              whileTap={{
+                scale: 0.98,
+              }}
+              onClick={() =>
+                setShowGraph(true)
+              }
+              className="mt-12 border border-zinc-700 px-6 py-3"
+            >
+              Trace The Root
+            </motion.button>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="graph"
+            variants={
+              pageVariants
             }
-            className=" mt-12 border px-6 py-3"
+            initial="hidden"
+            animate="visible"
+            exit="exit"
           >
-            Reveal Pattern
-          </button>
-        </>
-      ) : (
-        <>
-          <DesireGraph />
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0.95,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+              }}
+              transition={{
+                duration: 1,
+              }}
+            >
+              <DesireGraph />
+            </motion.div>
 
-          <div className="mt-12">
+            <motion.div
+              className="mt-12"
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              transition={{
+                delay: 0.8,
+              }}
+            >
+              <h2 className="text-4xl mb-4">
+                Reflection
+              </h2>
 
-            <h2 className="text-4xl mb-4">
-              Reflection
-            </h2>
+              <p className="text-xl text-zinc-300">
+                Does every desire
+                eventually point toward
+                fear?
+              </p>
+            </motion.div>
 
-            <p>
-              Does every desire
-              eventually point toward
-              fear?
-            </p>
+            <motion.button
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              transition={{
+                delay: 1.5,
+              }}
+              whileHover={{
+                scale: 1.03,
+              }}
+              whileTap={{
+                scale: 0.98,
+              }}
+              className="mt-12 border border-zinc-700 px-6 py-3"
+              onClick={() => {
+                completeModule(
+                  "desire"
+                );
 
-          </div>
-
-          <button
-            className=" mt-12 border px-6 py-3"
-            onClick={() => {
-              completeModule(
-                "desire"
-              );
-
-              router.push(
-                "/simulator"
-              );
-            }}
-          >
-            Enter Life Simulator
-          </button>
-        </>
-      )}
+                router.push(
+                  "/simulator"
+                );
+              }}
+            >
+              Witness The Cycle
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </main>
   );
