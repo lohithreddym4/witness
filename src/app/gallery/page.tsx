@@ -1,48 +1,128 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
-export default function Gallery() {
-  const [fade, setFade] =
+import {
+  impermanenceSequence,
+} from "@/content/gallery/impermanence";
+
+import {
+  useProgressionStore,
+} from "@/store/progressionStore";
+
+export default function GalleryPage() {
+  const router = useRouter();
+
+  const [index, setIndex] =
+    useState(0);
+
+  const [finished, setFinished] =
     useState(false);
 
-  const items = [
-    "Body",
-    "Money",
-    "Status",
-    "Relationships",
-    "Dreams",
-  ];
+  const completeModule =
+    useProgressionStore(
+      (s) => s.completeModule
+    );
+
+  useEffect(() => {
+    if (finished) return;
+
+    const timer = setTimeout(() => {
+      if (
+        index <
+        impermanenceSequence.length - 1
+      ) {
+        setIndex(
+          (prev) => prev + 1
+        );
+      } else {
+        setFinished(true);
+      }
+    }, 2500);
+
+    return () =>
+      clearTimeout(timer);
+  }, [index, finished]);
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center">
+    <main className="min-h-screen bg-black text-white flex items-center justify-center px-8">
 
-      <button
-        onClick={() =>
-          setFade(true)
-        }
-        className="mb-20 border px-6 py-3"
-      >
-        Fast Forward 100 Years
-      </button>
+      {!finished ? (
+        <div className="text-center">
+          <motion.h1
+  key={impermanenceSequence[index]}
+  initial={{
+    opacity: 0,
+    scale: 0.95,
+  }}
+  animate={{
+    opacity: 1,
+    scale: 1,
+  }}
+  exit={{
+    opacity: 0,
+  }}
+  transition={{
+    duration: 1.2,
+  }}
+  className="text-7xl font-light"
+>
+  {impermanenceSequence[index]}
 
-      <div className="space-y-8">
+</motion.h1>
+          
 
-        {items.map((item) => (
-          <div
-            key={item}
-            className={`text-4xl transition-all duration-[3000ms]
-            ${
-              fade
-                ? "opacity-0"
-                : "opacity-100"
-            }`}
+          <p className="mt-8 text-zinc-500">
+            passes away...
+          </p>
+
+        </div>
+      ) : (
+        <div className="text-center max-w-3xl">
+
+          <h1 className="text-6xl mb-12">
+            Everything Changed.
+          </h1>
+
+          <p className="text-2xl text-zinc-400 mb-6">
+            Body changed.
+          </p>
+
+          <p className="text-2xl text-zinc-400 mb-6">
+            Possessions changed.
+          </p>
+
+          <p className="text-2xl text-zinc-400 mb-6">
+            Relationships changed.
+          </p>
+
+          <p className="text-2xl text-zinc-400 mb-12">
+            Dreams changed.
+          </p>
+
+          <h2 className="text-4xl mb-12">
+            What remains?
+          </h2>
+
+          <button
+            className=" border px-6 py-3 hover:border-white"
+            onClick={() => {
+              completeModule(
+                "gallery"
+              );
+
+              router.push(
+                "/chapters"
+              );
+            }}
           >
-            {item}
-          </div>
-        ))}
+            Explore Teachings
+          </button>
 
-      </div>
+        </div>
+      )}
 
     </main>
   );

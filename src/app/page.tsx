@@ -1,37 +1,38 @@
-"use client";
-
-import { AnimatePresence, motion } from "framer-motion";
-import SceneRenderer from "@/components/cinematic/SceneRenderer";
-import { witnessJourney } from "@/content/journeys/witness";
-import { useJourneyStore } from "@/store/journeyStore";
-import { useKeyboardNavigation } from "@/hooks/useKeyboardNavigation";
+import Link from "next/link";
 
 export default function HomePage() {
-  const currentScene = useJourneyStore(
-    (state) => state.currentScene
-  );
-
-  const scene = witnessJourney[currentScene];
-
-  
-  useKeyboardNavigation();
-
   return (
-    <main className="bg-black text-white min-h-screen overflow-hidden">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={scene.id}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -40 }}
-          transition={{
-            duration: 0.8,
-            ease: "easeInOut",
-          }}
+    <main className="
+      min-h-screen
+      flex
+      items-center
+      justify-center
+    ">
+
+      <div className="text-center">
+
+        <h1 className="text-7xl mb-6">
+          Witness
+        </h1>
+
+        <p className="text-zinc-400 mb-12">
+          An interactive journey into
+          self inquiry.
+        </p>
+
+        <Link
+          href="/witness"
+          className="
+            border
+            px-6
+            py-3
+          "
         >
-          <SceneRenderer scene={scene} />
-        </motion.div>
-      </AnimatePresence>
+          Begin
+        </Link>
+
+      </div>
+
     </main>
   );
 }

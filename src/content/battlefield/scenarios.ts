@@ -1,29 +1,19 @@
 export const scenarios = [
     {
-      id: "career",
+      id: "fear",
       title: "Career Anxiety",
-  
-      arjuna:
-        "I do not know what to do.",
-  
-      teaching:
-        "You control action, not results.",
-  
-      reflection:
-        "Who is afraid of failure?"
+      teachingId: "fear",
     },
   
     {
       id: "comparison",
       title: "Comparison",
+      teachingId: "attachment",
+    },
   
-      arjuna:
-        "Others seem stronger.",
-  
-      teaching:
-        "Focus on your duty.",
-  
-      reflection:
-        "What are you comparing?"
-    }
+    {
+      id: "purpose",
+      title: "Purpose",
+      teachingId: "karma",
+    },
   ];

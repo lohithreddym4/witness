@@ -1,4 +1,4 @@
-import KnowledgeGraph from "@/components/graph/KnowledgeGraph";
+import ConceptGraph from "@/components/graph/ConceptGraph";
 
 export default function KnowledgeGraphPage() {
   return (
@@ -11,12 +11,12 @@ export default function KnowledgeGraphPage() {
         </h1>
 
         <p className="text-zinc-400">
-          Explore the teachings through concepts.
+          Explore interconnected teachings.
         </p>
 
       </div>
 
-      <KnowledgeGraph />
+      <ConceptGraph />
 
     </main>
   );
